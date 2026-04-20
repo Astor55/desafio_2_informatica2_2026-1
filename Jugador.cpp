@@ -1,12 +1,12 @@
 #include "Jugador.h"
 
 //Constructor
-Jugador::Jugador(string n, string a, unsigned short num)
+Jugador::Jugador()
 {
 
-    nombre = n;
-    apellido = a;
-    numero_camisa = num;
+    nombre = "";
+    apellido = "";
+    numero_camisa = 0;
 
     goles = 0;
     asistencias = 0;
@@ -35,6 +35,12 @@ Jugador::Jugador(const Jugador& otro)
 
     minutos = otro.minutos;
     partidos = otro.partidos;
+
+}
+
+bool Jugador::operator!=(const Jugador& otro) const{
+
+    return this->numero_camisa;
 
 }
 
@@ -93,13 +99,13 @@ void Jugador::Sumar_faltas()
 unsigned short Jugador::getNumero()
 {
 
-    return goles;
+    return numero_camisa;
 }
 
 unsigned short Jugador::getGoles()
 {
 
-    return numero;
+    return goles;
 
 }
 

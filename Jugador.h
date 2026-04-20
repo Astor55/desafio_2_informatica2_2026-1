@@ -25,10 +25,15 @@ private:
 
 public:
 
+    Jugador();
+
     //constructor
     Jugador(string, string, unsigned short);
 
     Jugador(const Jugador& otro);
+
+    //sobrecarga
+    bool operator!=(const Jugador& otro)const;
 
     //metodos
     void Anotar_gol();

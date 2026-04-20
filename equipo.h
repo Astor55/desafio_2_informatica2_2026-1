@@ -1,5 +1,5 @@
 #ifndef EQUIPO_H
-#define
+#define EQUIPO_H
 
 #include <string>
 #include "Jugador.h"

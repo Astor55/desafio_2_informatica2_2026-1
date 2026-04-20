@@ -13,11 +13,14 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 
 add_executable(desafio_2_2026_1
-  main.cpp
-  equipo.h equipo.cpp
-  Jugador.h Jugador.cpp
-  bombo.h bombo.cpp
+    main.cpp
+    equipo.h equipo.cpp
+    Jugador.h Jugador.cpp
+    bombo.h
+    bombo.cpp
+    grupo.h grupo.cpp
 )
+
 target_link_libraries(desafio_2_2026_1 PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 
 include(GNUInstallDirs)

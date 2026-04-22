@@ -40,26 +40,50 @@ void Bombo :: Agregar_equipo(Equipo* nuevo_equipo){
 Equipo* Bombo :: Sacar_aleatorio(){
 
 
+    if(posicion_equipo == 0){
+
+        return nullptr;
+    }
+
+    static random_device rd;
+    static mt19937 gen(rd());
+
+    uniform_int_distribution<> dist(0, posicion_equipo -1);
+
+    indice = dist(gen);
+
+    Equipo* seleccionado = equipos[indice];
+
+    equipos[indice] = equipos[posicion_equipo - 1];
+
+    posicion_equipo--;
+
+    return seleccionado;
 }
 
 
 
 Bombo& Bombo :: operator=(const Bombo& otro){
 
-    cantidad = otro.cantidad;
+    if(this != &otro){
 
-    posicion_equipo = otro.posicion_equipo;
+        delete[] equipos;
 
-    delete[] equipos;
+        cantidad = otro.cantidad;
 
-    equipos = new Equipo*[cantidad];
+        posicion_equipo = otro.posicion_equipo;
 
-    for(int i = 0; i < cantidad; i++){
+        equipos = new Equipo*[cantidad];
 
-        equipos[i] = otro.equipos[i];
+        for(int i = 0; i < posicion_equipo; i++){
+
+            equipos[i] = otro.equipos[i];
+        }
+
+        return *this;
     }
 
-    return *this;
+
 }
 
 bool Bombo :: operator==(const Bombo& otro) const{

@@ -1,7 +1,8 @@
 #include "equipo.h"
 
 Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_favor, unsigned int _goles_en_contra,
-               unsigned int _ranking_fifa, unsigned int _partidos_ganados, unsigned int _partidos_empatados, unsigned int _partidos_perdidos){
+                unsigned int _ranking_fifa, unsigned int _partidos_ganados, unsigned int _partidos_empatados, unsigned int _partidos_perdidos)
+    : puntos(0) , cantidad_jugadores(26) {
 
     nombre =_nombre;
 
@@ -18,10 +19,6 @@ Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_fa
     partidos_empatados = _partidos_empatados;
 
     partidos_perdidos = _partidos_perdidos;
-
-    puntos = 0;
-
-    cantidad_jugadores = 26;
 
     jugadores = new Jugador[cantidad_jugadores];
 }
@@ -105,37 +102,40 @@ void Equipo :: sumar_puntos(int puntos_ganados){
 
 Equipo& Equipo :: operator=(const Equipo& otra){
 
-    nombre = otra.nombre;
+    if(this != &otro){
 
-    confederacion = otra.confederacion;
 
-    goles_a_favor = otra.goles_a_favor;
+        nombre = otra.nombre;
 
-    goles_en_contra = otra.goles_en_contra;
+        confederacion = otra.confederacion;
 
-    ranking_fifa = otra.ranking_fifa;
+        goles_a_favor = otra.goles_a_favor;
 
-    partidos_ganados = otra.partidos_ganados;
+        goles_en_contra = otra.goles_en_contra;
 
-    partidos_empatados= otra.partidos_empatados;
+        ranking_fifa = otra.ranking_fifa;
 
-    partidos_perdidos = otra.partidos_perdidos;
+        partidos_ganados = otra.partidos_ganados;
 
-    puntos = otra.puntos;
+        partidos_empatados= otra.partidos_empatados;
 
-    cantidad_jugadores = otra.cantidad_jugadores;
+        partidos_perdidos = otra.partidos_perdidos;
 
-    delete[] jugadores;
+        puntos = otra.puntos;
 
-    jugadores = new Jugador[cantidad_jugadores];
+        cantidad_jugadores = otra.cantidad_jugadores;
 
-    for(int j = 0; j < cantidad_jugadores; j++){
+        delete[] jugadores;
 
-        jugadores[j] = otra.jugadores[j];
+        jugadores = new Jugador[cantidad_jugadores];
+
+        for(int j = 0; j < cantidad_jugadores; j++){
+
+            jugadores[j] = otra.jugadores[j];
+        }
+
+        return *this;
     }
-
-    return *this;
-
 }
 
 bool Equipo :: operator==(const Equipo& otro) const{

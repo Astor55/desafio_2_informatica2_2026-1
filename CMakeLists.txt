@@ -19,6 +19,7 @@ add_executable(desafio_2_2026_1
     bombo.h
     bombo.cpp
     grupo.h grupo.cpp
+    partido.h partido.cpp
 )
 
 target_link_libraries(desafio_2_2026_1 PRIVATE Qt${QT_VERSION_MAJOR}::Core)

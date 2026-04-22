@@ -2,6 +2,7 @@
 #define BOMBO_H
 
 #include "equipo.h"
+#include <random>
 
 using namespace std;
 

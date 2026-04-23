@@ -1,5 +1,7 @@
 #include "bombo.h"
 
+#include <random>
+
 Bombo :: Bombo(){
 
     cantidad = 12;

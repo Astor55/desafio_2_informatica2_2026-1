@@ -102,7 +102,7 @@ void Equipo :: sumar_puntos(int puntos_ganados){
 
 Equipo& Equipo :: operator=(const Equipo& otra){
 
-    if(this != &otro){
+    if(this != &otra){
 
 
         nombre = otra.nombre;
@@ -133,9 +133,10 @@ Equipo& Equipo :: operator=(const Equipo& otra){
 
             jugadores[j] = otra.jugadores[j];
         }
-
-        return *this;
     }
+
+    return *this;
+
 }
 
 bool Equipo :: operator==(const Equipo& otro) const{
@@ -184,7 +185,40 @@ bool Equipo :: operator==(const Equipo& otro) const{
 
 }
 
+//getters
+unsigned int Equipo::getGolesAFavor()const
+{
 
+    return goles_a_favor;
+
+}
+
+
+unsigned int Equipo::getGolesEnContra()const
+{
+
+    return goles_en_contra;
+
+}
+
+
+unsigned int Equipo::getPartidosJugados()const
+{
+
+    return partidos_ganados + partidos_empatados + partidos_perdidos;
+
+}
+
+
+unsigned int Equipo::getRankingFIFA()const
+{
+
+    return ranking_fifa;
+
+}
+
+
+//destructor
 Equipo :: ~Equipo(){
 
     delete[] jugadores;

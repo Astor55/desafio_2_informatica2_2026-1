@@ -4,6 +4,8 @@
 Grupo::Grupo(char l) : letra(l), cantidad_equipos(0), puntos{0}, dif_goles{0}
 {
 
+    equipos = new Equipo*[4];
+
     for(unsigned short i = 0; i < 4; i++)
     {
 

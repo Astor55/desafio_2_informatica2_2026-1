@@ -13,8 +13,10 @@ class Equipo
 
     string nombre;
     string confederacion;
+
     Jugador* jugadores;
-    int cantidad_jugadores;
+
+    unsigned short cantidad_jugadores;
     unsigned int goles_a_favor;
     unsigned int goles_en_contra;
     unsigned int ranking_fifa;
@@ -41,7 +43,11 @@ class Equipo
         //No es necesario sobrecargar los operadores de suma en esta clase debido a que el tipo de dato numerico
         // usado tiene definido los operadores ++ y +=
 
-
+        //getters
+        unsigned int getGolesAFavor() const;
+        unsigned int getGolesEnContra() const;
+        unsigned int getPartidosJugados() const;
+        unsigned int getRankingFIFA() const;
 
         ~Equipo(); //Destructor de la clase
 

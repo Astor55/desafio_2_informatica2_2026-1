@@ -10,7 +10,7 @@ private:
     //Atributos Grupo
     char letra;
 
-    Equipo* equipos[4];
+    Equipo** equipos;
     unsigned short cantidad_equipos;
 
     unsigned short puntos[4];

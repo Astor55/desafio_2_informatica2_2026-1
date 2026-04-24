@@ -15,8 +15,10 @@ class Equipo
     string confederacion;
 
     Jugador* jugadores;
+    Jugador* jugadores_en_partido;
 
     unsigned short cantidad_jugadores;
+    unsigned short cantidad_jugadores_jugando;
     unsigned int goles_a_favor;
     unsigned int goles_en_contra;
     unsigned int ranking_fifa;
@@ -31,6 +33,7 @@ class Equipo
         Equipo(const Equipo& otro); // Constructor de copia
 
         void lista_jugadores(const Jugador* players);
+        void lista_jugadores_jugando(const Jugador* players);
         void sumar_goles_a_favor(unsigned short);
         void sumar_goles_en_contra(unsigned short);
         void sumar_partidos_ganados();
@@ -48,6 +51,7 @@ class Equipo
         unsigned int getGolesEnContra() const;
         unsigned int getPartidosJugados() const;
         unsigned int getRankingFIFA() const;
+        Jugador* getJugador_en_partido(unsigned short indice) const;
 
         ~Equipo(); //Destructor de la clase
 

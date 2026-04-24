@@ -40,24 +40,27 @@ class Partido
 
         void jugar();
 
+        Equipo* desempatar();
+
         //calculos
         unsigned short calcular_goles_equipo1();
         unsigned short calcular_goles_equipo2();
 
-        unsigned short calcular_faltas1();
-        unsigned short calcular_faltas2();
+        void calcular_faltas1();
+        void calcular_faltas2();
 
-        float calcular_posesion1();
-        float calcular_posesion2();
+        void calcular_posesion1();
+        void calcular_posesion2();
 
-        void estimar_duracion();
 
         //logica de los resultados
         bool es_empate() const;
 
-        void desempatar() const;
+        //Getters
 
-        Equipo* ganador();
+        float getposesion1();
+        float getposesion2();
+
 
         //destructor
         ~Partido();

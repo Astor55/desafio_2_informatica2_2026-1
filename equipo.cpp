@@ -1,8 +1,9 @@
 #include "equipo.h"
+#include <random>
 
 Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_favor, unsigned int _goles_en_contra,
                 unsigned int _ranking_fifa, unsigned int _partidos_ganados, unsigned int _partidos_empatados, unsigned int _partidos_perdidos)
-    : puntos(0) , cantidad_jugadores(26) {
+    : puntos(0) , cantidad_jugadores(26), cantidad_jugadores_jugando(11) {
 
     nombre =_nombre;
 
@@ -21,6 +22,8 @@ Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_fa
     partidos_perdidos = _partidos_perdidos;
 
     jugadores = new Jugador[cantidad_jugadores];
+
+    jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
 }
 
 
@@ -51,6 +54,13 @@ Equipo :: Equipo(const Equipo& otro){
         jugadores[i] = otro.jugadores[i];
     }
 
+    jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
+
+    for(int j = 0; j < cantidad_jugadores_jugando; j++){
+
+        jugadores_en_partido[j] = otro.jugadores_en_partido[j]
+    }
+
     puntos = otro.puntos;
 
 }
@@ -63,6 +73,28 @@ void Equipo :: lista_jugadores(const Jugador* players){
         jugadores[i] = players[i];
     }
 
+}
+
+
+void Equipo :: lista_jugadores_jugando(const Jugador* players){
+
+    unsigned short i = 0;
+
+    while(i < 11){
+
+
+        static std::mt19937 gen(std::random_device{}());
+
+        static std::uniform_int_distribution <int> dist(0, 25);
+
+
+        unsigned int a = dist(gen);
+
+        jugadores_en_partido[a] = players[a];
+        i++;
+
+
+    }
 }
 
 
@@ -133,6 +165,15 @@ Equipo& Equipo :: operator=(const Equipo& otra){
 
             jugadores[j] = otra.jugadores[j];
         }
+
+        delete[] jugadores_en_partido;
+
+        jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
+
+        for(int a = 0; a < cantidad_jugadores_jugando ; a++){
+
+            jugadores_en_partido[a] = otra.jugadores_en_partido[a];
+        }
     }
 
     return *this;
@@ -179,6 +220,14 @@ bool Equipo :: operator==(const Equipo& otro) const{
         }
     }
 
+    for(int j = 0 ; j < cantidad_jugadores_jugando; j++){
+
+        if(jugadores_en_partido[j] != otro.jugadores_en_partido[j]){
+
+            return false;
+        }
+    }
+
 
 
     return true;
@@ -218,8 +267,17 @@ unsigned int Equipo::getRankingFIFA()const
 }
 
 
+
+Jugador* Equipo :: getJugador_en_partido(unsigned short indice) const{
+
+    return jugadores_en_partido[indice];
+
+}
+
+
 //destructor
 Equipo :: ~Equipo(){
 
     delete[] jugadores;
+    delete[] jugadores_en_partido;
 }

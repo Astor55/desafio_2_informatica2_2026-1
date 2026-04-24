@@ -45,8 +45,9 @@ public:
     void Sumar_faltas();
 
     //Getters
-    unsigned short getNumero();
-    unsigned short getGoles();
+    unsigned short getNumero() const;
+    unsigned short getGoles() const;
+    unsigned short getFaltas() const;
 
     //Destructor
     ~Jugador();

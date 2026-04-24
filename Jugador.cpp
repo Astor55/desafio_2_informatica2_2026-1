@@ -109,5 +109,12 @@ unsigned short Jugador::getGoles()
 
 }
 
+unsigned short Jugador::getFaltas()
+{
+
+    return faltas;
+}
+
+
 //Destructor
 Jugador::~Jugador() {}

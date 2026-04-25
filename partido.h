@@ -38,26 +38,33 @@ class Partido
         //cosntructor de copia
         Partido(const Partido& otro);
 
-        void jugar();
-
         Equipo* desempatar();
 
         //calculos
-        unsigned short calcular_goles_equipo1();
-        unsigned short calcular_goles_equipo2();
+        unsigned short calcular_goles_equipo(Equipo* equipoA, Equipo* equipoB);
 
-        void calcular_faltas1();
-        void calcular_faltas2();
+        void jugar();
 
-        void calcular_posesion1();
-        void calcular_posesion2();
+        void actualizar_estado();
 
+        void resultados();
+
+        void eventos();
+
+        void calcular_faltas(Equipo* equipo, unsigned short& faltas);
+
+        void calcular_tarjetas(Equipo* equipo);
+
+        void calcular_posesion();
+
+        void asignar_min(unsigned short minutos);
+
+        void sumar_partidos();
 
         //logica de los resultados
         bool es_empate() const;
 
         //Getters
-
         float getposesion1();
         float getposesion2();
 

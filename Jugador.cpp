@@ -40,7 +40,7 @@ Jugador::Jugador(const Jugador& otro)
 
 bool Jugador::operator!=(const Jugador& otro) const{
 
-    return this->numero_camisa;
+    return this->numero_camisa != otro.numero_camisa;
 
 }
 
@@ -66,10 +66,10 @@ void Jugador::Sumar_amarilla()
 
 }
 
-void Jugador::Sumar_minutos(unsigned int m)
+void Jugador::Sumar_minutos(unsigned short minutos)
 {
 
-    minutos += m;
+    this->minutos += minutos;
 
 }
 
@@ -95,24 +95,25 @@ void Jugador::Sumar_faltas()
 }
 
 //Getters
-
-unsigned short Jugador::getNumero()
+unsigned short Jugador::getNumero()const
 {
 
     return numero_camisa;
+
 }
 
-unsigned short Jugador::getGoles()
+unsigned short Jugador::getGoles()const
 {
 
     return goles;
 
 }
 
-unsigned short Jugador::getFaltas()
+unsigned short Jugador::getFaltas()const
 {
 
     return faltas;
+
 }
 
 

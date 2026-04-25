@@ -47,6 +47,8 @@ Equipo :: Equipo(const Equipo& otro){
 
     cantidad_jugadores = otro.cantidad_jugadores;
 
+    cantidad_jugadores_jugando = otro.cantidad_jugadores_jugando;
+
     jugadores = new Jugador[cantidad_jugadores];
 
     for(int i = 0; i < cantidad_jugadores; i++){
@@ -58,7 +60,7 @@ Equipo :: Equipo(const Equipo& otro){
 
     for(int j = 0; j < cantidad_jugadores_jugando; j++){
 
-        jugadores_en_partido[j] = otro.jugadores_en_partido[j]
+        jugadores_en_partido[j] = otro.jugadores_en_partido[j];
     }
 
     puntos = otro.puntos;
@@ -78,21 +80,26 @@ void Equipo :: lista_jugadores(const Jugador* players){
 
 void Equipo :: lista_jugadores_jugando(const Jugador* players){
 
-    unsigned short i = 0;
+    static std::mt19937 gen(std::random_device{}());
 
-    while(i < 11){
+    static std::uniform_int_distribution <int> dist(0, 25);
 
+    bool usados[26] = {false};
 
-        static std::mt19937 gen(std::random_device{}());
+    for(unsigned short i = 0; i < 11; i++)
+    {
 
-        static std::uniform_int_distribution <int> dist(0, 25);
+        unsigned int a;
 
+        do{
 
-        unsigned int a = dist(gen);
+            a = dist(gen);
 
-        jugadores_en_partido[a] = players[a];
-        i++;
+        } while (usados[a]);
 
+        usados[a] = true;
+
+        jugadores_en_partido[i] = players[a];
 
     }
 }
@@ -270,7 +277,7 @@ unsigned int Equipo::getRankingFIFA()const
 
 Jugador* Equipo :: getJugador_en_partido(unsigned short indice) const{
 
-    return jugadores_en_partido[indice];
+    return &jugadores_en_partido[indice];
 
 }
 

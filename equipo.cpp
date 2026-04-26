@@ -1,4 +1,5 @@
 #include "equipo.h"
+#include "funciones.h"
 #include <random>
 
 Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_favor, unsigned int _goles_en_contra,
@@ -22,8 +23,10 @@ Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_fa
     partidos_perdidos = _partidos_perdidos;
 
     jugadores = new Jugador[cantidad_jugadores];
+    memoria_usada += sizeof(Jugador) * cantidad_jugadores;
 
     jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
+    memoria_usada += sizeof(Jugador) * cantidad_jugadores_jugando;
 }
 
 
@@ -50,16 +53,20 @@ Equipo :: Equipo(const Equipo& otro){
     cantidad_jugadores_jugando = otro.cantidad_jugadores_jugando;
 
     jugadores = new Jugador[cantidad_jugadores];
+    memoria_usada += sizeof(Jugador) * cantidad_jugadores;
 
     for(int i = 0; i < cantidad_jugadores; i++){
 
+        cont_trabajo++;
         jugadores[i] = otro.jugadores[i];
     }
 
     jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
+    memoria_usada += sizeof(Jugador) * cantidad_jugadores_jugando;
 
     for(int j = 0; j < cantidad_jugadores_jugando; j++){
 
+        cont_trabajo++;
         jugadores_en_partido[j] = otro.jugadores_en_partido[j];
     }
 
@@ -72,6 +79,7 @@ void Equipo :: lista_jugadores(const Jugador* players){
 
     for(int i = 0; i < cantidad_jugadores; i++){
 
+        cont_trabajo++;
         jugadores[i] = players[i];
     }
 
@@ -96,6 +104,8 @@ void Equipo :: lista_jugadores_jugando(const Jugador* players){
             a = dist(gen);
 
         } while (usados[a]);
+
+        cont_trabajo++;
 
         usados[a] = true;
 
@@ -167,18 +177,22 @@ Equipo& Equipo :: operator=(const Equipo& otra){
         delete[] jugadores;
 
         jugadores = new Jugador[cantidad_jugadores];
+        memoria_usada += sizeof(Jugador) * cantidad_jugadores;
 
         for(int j = 0; j < cantidad_jugadores; j++){
 
+            cont_trabajo++;
             jugadores[j] = otra.jugadores[j];
         }
 
         delete[] jugadores_en_partido;
 
         jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
+        memoria_usada += sizeof(Jugador) * cantidad_jugadores_jugando;
 
         for(int a = 0; a < cantidad_jugadores_jugando ; a++){
 
+            cont_trabajo++;
             jugadores_en_partido[a] = otra.jugadores_en_partido[a];
         }
     }
@@ -221,6 +235,7 @@ bool Equipo :: operator==(const Equipo& otro) const{
 
     for(int i = 0; i < cantidad_jugadores; i++){
 
+        cont_trabajo++;
         if(jugadores[i] != otro.jugadores[i]){
 
             return false;
@@ -229,6 +244,7 @@ bool Equipo :: operator==(const Equipo& otro) const{
 
     for(int j = 0 ; j < cantidad_jugadores_jugando; j++){
 
+        cont_trabajo++;
         if(jugadores_en_partido[j] != otro.jugadores_en_partido[j]){
 
             return false;
@@ -306,6 +322,15 @@ unsigned short Equipo::getPartidosGanados()const
 {
 
     return partidos_ganados;
+
+}
+
+
+
+string Equipo::getconfederacion() const
+{
+
+    return confederacion;
 
 }
 

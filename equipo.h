@@ -54,6 +54,7 @@ class Equipo
         unsigned short getPartidosPerdidos() const;
         unsigned short getPartidosEmpatados() const;
         unsigned int getRankingFIFA() const;
+        string getconfederacion() const;
         string getnombre() const;
         Jugador* getJugador_en_partido(unsigned short indice) const;
 

@@ -1,15 +1,18 @@
 #include "grupo.h"
+#include "funciones.h"
 
 //constructor
 Grupo::Grupo(char l) : letra(l), cantidad_equipos(0), puntos{0}, dif_goles{0}
 {
 
     equipos = new Equipo*[4];
+    memoria_usada += sizeof(Equipo*) * 4;
 
     for(unsigned short i = 0; i < 4; i++)
     {
 
         equipos[i] = nullptr;
+        cont_trabajo++;
 
     }
 
@@ -24,9 +27,12 @@ Grupo::Grupo(const Grupo& otro)
     cantidad_equipos = otro.cantidad_equipos;
 
     equipos = new Equipo*[4];
+    memoria_usada += sizeof(Equipo*) * 4;
 
     for(unsigned short i = 0; i < 4; i++)
     {
+
+        cont_trabajo++;
 
         equipos[i] = otro.equipos[i];
         puntos[i] = otro.puntos[i];
@@ -132,6 +138,7 @@ void Grupo::ordenar()
 
         for (unsigned short j = 0; j < cantidad_equipos - 1 - i; j++)
         {
+            cont_trabajo++;
 
             if(puntos[j + 1] > puntos[j] ||
                 (puntos[j + 1] == puntos[j] &&
@@ -188,13 +195,16 @@ bool Grupo :: confederacion_valida(Equipo * equipo) const{
 
     if(equipo == nullptr) return false;
 
-    string conf = equipo->getConfederacion();
+    string conf = equipo->getconfederacion();
     int contador = 0;
 
     for(unsigned short i = 0; i < cantidad_equipos; i++)
     {
+
+        cont_trabajo++;
+
         if(equipos[i] != nullptr &&
-            equipos[i]->getConfederacion() == conf)
+            equipos[i]->getconfederacion() == conf)
         {
             contador++;
         }

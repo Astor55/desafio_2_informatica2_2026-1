@@ -1,4 +1,5 @@
 #include "partido.h"
+#include "funciones.h"
 #include <cmath>
 #include <random>
 
@@ -38,6 +39,7 @@ Partido :: Partido(const Partido& otro){
     for(int i = 0; i < 3; i++){
 
         arbitros[i] = otro.arbitros[i];
+        cont_trabajo++;
     }
 }
 
@@ -116,6 +118,7 @@ void Partido::asignar_min(unsigned short minutos)
 
         equipo_1->getJugador_en_partido(i)->Sumar_minutos(minutos);
         equipo_2->getJugador_en_partido(i)->Sumar_minutos(minutos);
+        cont_trabajo++;
 
     }
 
@@ -131,6 +134,7 @@ void Partido::sumar_partidos()
 
         equipo_1->getJugador_en_partido(i)->Sumar_partidos_jugados();
         equipo_2->getJugador_en_partido(i)->Sumar_partidos_jugados();
+        cont_trabajo++;
 
     }
 
@@ -292,6 +296,8 @@ void Partido :: calcular_faltas(Equipo* equipo, unsigned short& faltas)
     for (unsigned short i = 0; i < 11; i++)
     {
 
+        cont_trabajo++;
+
         float prob = probP(gen);
 
         Jugador* jugador_seleccionado = equipo->getJugador_en_partido(i);
@@ -333,6 +339,8 @@ void Partido::calcular_tarjetas(Equipo* equipo)
     for(unsigned short i = 0; i < 11; i++)
     {
 
+        cont_trabajo++;
+
         Jugador* jugador_seleccionado = equipo->getJugador_en_partido(i);
 
         unsigned short amarillas = 0;
@@ -368,6 +376,24 @@ float Partido :: getposesion2(){
 
 
     return posesion_balon_equipo2;
+}
+
+
+
+unsigned short Partido::getgoles1() const
+{
+
+    return goles_equipo1;
+
+}
+
+
+
+unsigned short Partido::getgoles2() const
+{
+
+    return goles_equipo2;
+
 }
 
 

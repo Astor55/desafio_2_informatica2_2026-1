@@ -61,6 +61,9 @@ class Partido
 
         void sumar_partidos();
 
+        unsigned short getgoles1() const;
+        unsigned short getgoles2() const;
+
         //logica de los resultados
         bool es_empate() const;
 

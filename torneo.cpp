@@ -1,38 +1,55 @@
 #include "torneo.h"
-
+#include "funciones.h"
 
 Torneo::Torneo(Equipo* equipos_jugando): cantidad_equipos(48), cantidad_bombos(4), cantidad_grupos(12){
 
     equipos = new Equipo*[cantidad_equipos];
+    memoria_usada += sizeof(Equipo*) * cantidad_equipos;
 
     for(unsigned short i = 0 ;i < cantidad_equipos ; i++){
 
-        equipos[i] = equipos_jugando[i];
+        equipos[i] = &equipos_jugando[i];
     }
 
     bombos = new Bombo*[cantidad_bombos];
+    memoria_usada += sizeof(Bombo*) * cantidad_bombos;
 
     grupos = new Grupo*[cantidad_grupos];
+    memoria_usada += sizeof(Grupo*) * cantidad_grupos;
+
+    for(unsigned short i = 0; i < cantidad_bombos; i++){
+
+        bombos[i] = new Bombo();
+        memoria_usada += sizeof(Bombo);
+    }
+
+    for (unsigned short i = 0; i < cantidad_grupos; i++) {
+
+        grupos[i] = new Grupo('A' + i);
+        memoria_usada += sizeof(Grupo);
+    }
 
 }
 
 Torneo :: Torneo(const Torneo& otro){
-
-    delete[] equipos;
-    delete[] bombos;
-    delete[] grupos;
 
     cantidad_equipos = otro.cantidad_equipos;
     cantidad_bombos = otro.cantidad_bombos;
     cantidad_grupos = otro.cantidad_grupos;
 
     equipos = new Equipo*[cantidad_equipos];
+    memoria_usada += sizeof(Equipo*) * cantidad_equipos;
+
     bombos = new Bombo*[cantidad_bombos];
-    grupos = new Grupo[cantidad_grupos];
+    memoria_usada += sizeof(Bombo*) * cantidad_bombos;
+
+    grupos = new Grupo*[cantidad_grupos];
+    memoria_usada += sizeof(Grupo*) * cantidad_grupos;
 
     for(unsigned short i = 0; i < cantidad_equipos; i++){
 
         equipos[i] = otro.equipos[i];
+        cont_trabajo++;
     }
 
     for(unsigned short j = 0; j < cantidad_bombos; j++){
@@ -40,6 +57,7 @@ Torneo :: Torneo(const Torneo& otro){
         for(unsigned short equi = 0; equi < 12; equi++){
 
             bombos[j][equi] = otro.bombos[j][equi];
+            cont_trabajo++;
         }
     }
 
@@ -48,6 +66,7 @@ Torneo :: Torneo(const Torneo& otro){
         for(unsigned short teams = 0; teams < 4; teams++){
 
             grupos[a][teams] = otro.grupos[a][teams];
+            cont_trabajo++;
         }
     }
 }
@@ -59,6 +78,8 @@ void Torneo :: crear_bombos(){
         for(unsigned short j = 0; j < cantidad_equipos - i - 1; j++){
 
             if(equipos[j]->getRankingFIFA() > equipos[j+1]->getRankingFIFA()){
+
+                cont_trabajo++;
 
                 Equipo* temp = equipos[j];
 
@@ -72,17 +93,19 @@ void Torneo :: crear_bombos(){
 
     for(unsigned short a = 0; a < cantidad_equipos; a++){ //Guarda en cada bombo del arreglo de bombos, los equipos segun su ranking fifa
 
+        cont_trabajo++;
+
         if(a < 12)
-            bombos[0].Agregar_equipo(equipos[a]);
+            bombos[0]->Agregar_equipo(equipos[a]);
 
         else if(a < 24)
-            bombos[1].Agregar_equipo(equipos[a]);
+            bombos[1]->Agregar_equipo(equipos[a]);
 
         else if(a < 36)
-            bombos[2].Agregar_equipo(equipos[a]);
+            bombos[2]->Agregar_equipo(equipos[a]);
 
         else
-            bombos[3].Agregar_equipo(equipos[a]);
+            bombos[3]->Agregar_equipo(equipos[a]);
     }
 }
 
@@ -96,6 +119,8 @@ void Torneo :: generar_grupos(){
 
             while(!asignado)
             {
+                cont_trabajo++;
+
                 Equipo* equipo = bombos[i]->Sacar_aleatorio();
 
                 if(equipo == nullptr) break;
@@ -133,7 +158,9 @@ void Torneo :: simular_fase_de_grupos(){
                 Partido game(equipo1, equipo2, "nombreSede", arbitros, "00:00", "20/07/2026");
                 game.jugar();
 
-                grupo->actualizar_tabla(i, j, game.getGoles1(), game.getGoles2());
+                cont_trabajo++;
+
+                grupo->actualizar_tabla(i, j, game.getgoles1(), game.getgoles2());
             }
         }
 
@@ -157,9 +184,11 @@ void Torneo :: clasificar_mejores_terceros(Equipo* mejores_terceros[8]){
         terceros[i] = (*grupos[i])[2]; //Se realiza la indireccion debido a que un grupo en esta clase es un arreglo de arreglos de tipo grupo,
                                        // y necesitamos trabajar con los grupos, no con punteros
 
-        puntos[i] = grupos[i]->getPuntos(2);
+        puntos[i] = grupos[i]->getpuntos(2);
 
-        dif_goles[i] = grupos[i]->getDifGoles(2);
+        dif_goles[i] = grupos[i]->getdiffgoles(2);
+
+        cont_trabajo++;
     }
 
     for(int i = 0; i < 11; i++) //Bubble sort para equipos, sus puntos y la diferencia de goles en el grupo
@@ -184,6 +213,8 @@ void Torneo :: clasificar_mejores_terceros(Equipo* mejores_terceros[8]){
                 short tempD = dif_goles[j];
                 dif_goles[j] = dif_goles[j+1];
                 dif_goles[j+1] = tempD;
+
+                cont_trabajo++;
             }
         }
     }
@@ -191,6 +222,7 @@ void Torneo :: clasificar_mejores_terceros(Equipo* mejores_terceros[8]){
     for(int i = 0; i < 8; i++)
     {
         mejores_terceros[i] = terceros[i];
+        cont_trabajo++;
     }
 }
 
@@ -207,12 +239,14 @@ void Torneo :: clasificar_equipos(){
         clasificados[i*2]     = grupos[i]->primero(); //se usa i*2 y luego i*2+1, debido a que estos seran los indices de cada equipo en el arreglo
                                                       // de clasificados, y por cada iteracion es un grupo, por tanto cada iteracion ocupa 2 indices.
         clasificados[i*2 +1 ] = grupos[i]->segundo();
+        cont_trabajo++;
     }
 
     // agregar mejores terceros
     for(int i = 0; i < 8; i++){ //Aqui se usa 24+ i debido a que en el for anterior, clasifican los primeros y segundos, genrando un total de 23
                                 // y despues estos indices de 24 a 31 se rellenan con los mejores terceros
         clasificados[24 + i] = mejores_terceros[i];
+        cont_trabajo++;
     }
 }
 
@@ -222,6 +256,8 @@ void Torneo :: simular_eliminatorias(){
     Equipo* equipos_ganadores[];
 
     for(unsigned int i = 0; i < 32; i++){
+
+        cont_trabajo++;
 
         Equipo* equipo1 = equipos_clasificados[i*2];
         Equipo* equipo2 = equipos_clasificados[(i*2) + 1];

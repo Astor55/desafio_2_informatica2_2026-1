@@ -1,3 +1,4 @@
+#include "torneo.h"
 #include "funciones.h"
 #include <iostream>
 #include <sstream>
@@ -19,9 +20,12 @@ Equipo** leerCSV(const string& NombreArchivo)
     }
 
     Equipo** equipos = new Equipo*[48];
+    memoria_usada += sizeof(Equipo*) * 48;
 
     for(unsigned short i = 0; i < 48; i++)
     {
+
+        cont_trabajo++;
 
         equipos[i] = nullptr;
 
@@ -36,6 +40,8 @@ Equipo** leerCSV(const string& NombreArchivo)
 
     while(getline(archivo, linea) && i < 48)
     {
+
+        cont_trabajo++;
 
         stringstream ss(linea);
 
@@ -63,6 +69,7 @@ Equipo** leerCSV(const string& NombreArchivo)
                 stoi(ranking), stoi(partidos_ganados),
                 stoi(partidos_empatados), stoi(partidos_perdidos)
             );
+            memoria_usada += sizeof(Equipo);
 
             i++;
 
@@ -81,11 +88,45 @@ Equipo** leerCSV(const string& NombreArchivo)
 
 
 
+long long cont_trabajo = 0;
+
+long long memoria_usada = 0;
+
+Torneo* inicializacion_torno(Equipo** equipos)
+{
+
+    cont_trabajo++;
+    Torneo* torneo = new Torneo(equipos[0]);
+    memoria_usada += sizeof(Torneo);
+
+    return torneo;
+
+}
+
+
+
+void ejecutar_torneo(Torneo* torneo)
+{
+
+    torneo->crear_bombos();
+
+    torneo->generar_grupos();
+
+    torneo->simular_fase_de_grupos();
+
+    torneo->clasificar_equipos();
+
+}
+
+
+
 void liberar_memoria(Equipo** equipos, unsigned short n)
 {
 
-    for (int i = 0; i < n; ++i)
+    for(unsigned int i = 0; i < n; i++)
     {
+
+        cont_trabajo++;
 
         delete equipos[i];
 
@@ -94,4 +135,17 @@ void liberar_memoria(Equipo** equipos, unsigned short n)
     delete[] equipos;
 
 }
+
+
+
+void liberar_torneo(Torneo* torneo)
+{
+
+    delete torneo;
+
+}
+
+
+
+
 

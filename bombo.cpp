@@ -1,5 +1,5 @@
 #include "bombo.h"
-
+#include "funciones.h"
 #include <random>
 
 Bombo :: Bombo(){
@@ -9,11 +9,13 @@ Bombo :: Bombo(){
     posicion_equipo = 0;
 
     equipos = new Equipo*[cantidad];
+    memoria_usada += sizeof(Equipo*);
 
     for (unsigned short i = 0; i < cantidad; ++i)
     {
 
         equipos[i] = nullptr;
+        cont_trabajo++;
 
     }
 }
@@ -26,13 +28,13 @@ Bombo :: Bombo(const Bombo& otro){
     posicion_equipo = otro.posicion_equipo;
 
     equipos = new Equipo*[cantidad];
+    memoria_usada += sizeof(Equipo*) * cantidad;
 
     for(unsigned short i = 0; i < cantidad; i++){
 
         equipos[i] = otro.equipos[i];
+        cont_trabajo++;
     }
-
-
 }
 
 
@@ -44,6 +46,7 @@ void Bombo :: Agregar_equipo(Equipo* nuevo_equipo){
     {
 
         equipos[posicion_equipo++] = nuevo_equipo;
+        cont_trabajo++;
 
     }
 }
@@ -89,10 +92,12 @@ Bombo& Bombo :: operator=(const Bombo& otro)
     posicion_equipo = otro.posicion_equipo;
 
     equipos = new Equipo*[cantidad];
+    memoria_usada += sizeof(Equipo*) * cantidad;
 
     for(unsigned short i = 0; i < cantidad; i++){
 
         equipos[i] = otro.equipos[i];
+        cont_trabajo++;
     }
 
     return *this;
@@ -116,6 +121,7 @@ bool Bombo :: operator==(const Bombo& otro) const{
     for(int i = 0; i < cantidad; i++){
 
         if(equipos[i] != otro.equipos[i]){
+            cont_trabajo++;
 
             return false;
         }

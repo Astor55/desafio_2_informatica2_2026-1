@@ -250,12 +250,14 @@ void Torneo :: clasificar_equipos(){
     }
 }
 
+
+
 void Torneo :: simular_eliminatorias(){
 
     Equipo* equipos_clasificados[32] = clasificar_equipos();
-    Equipo* equipos_ganadores[];
+    Equipo* equipos_ganadores1[16];
 
-    for(unsigned int i = 0; i < 32; i++){
+    for(unsigned short i = 0; i < 16; i++){
 
         cont_trabajo++;
 
@@ -268,8 +270,149 @@ void Torneo :: simular_eliminatorias(){
 
         game.jugar();
 
+        if(game.getgoles1() > game.getgoles2()){
+
+            equipos_ganadores1[i] = equipo1;
+        }
+
+        else if(game.getgoles2() > game.getgoles1()){
+
+            equipos_ganadores1[i] = equipo2;
+        }
+
     }
 
+    Equipo* equiposganadores2[8];
+
+    for(unsigned short j = 0; j < 8; j++){
+
+        Equipo* team1 = equipos_ganadores1[j*2];
+        Equipo* team2 = equipos_ganadores1[(j*2)+ 1] ;
+
+        string arbitros2[3] ={"codArbitro1","codArbitro2","codArbitro3"};
+
+        Partido game2(team1, team2, "nombreSede", arbitros2, "00:00", "10/07/2026");
+
+        game2.jugar();
+
+        if(game2.getgoles1() > game2.getgoles2()){
+
+            equiposganadores2[j] = team1;
+        }
+
+        else if(game2.getgoles2() > game2.getgoles1()){
+
+            equiposganadores2[j] = team2;
+        }
+
+    }
+
+    Equipo* equiposganadores3[4];
+
+    for(unsigned short k = 0; k < 4 ; k++){
+
+        Equipo* t1 = equiposganadores2[k*2];
+        Equipo* t2 = equiposganadores2[(k*2)+ 1] ;
+
+        string arbitros3[3] ={"codArbitro1","codArbitro2","codArbitro3"};
+
+        Partido game3(t1, t2, "nombreSede", arbitros3, "00:00", "10/07/2026");
+
+        game3.jugar();
+
+        if(game3.getgoles1() > game3.getgoles2()){
+
+            equiposganadores3[k] = t1;
+        }
+
+        else if(game3.getgoles2()> game3.getgoles1()){
+
+            equiposganadores3[k] = t2;
+        }
+
+    }
+
+    Equipo* equiposganadores4[2];
+
+        for(unsigned short l = 0; l < 2 ; l++){
+
+        Equipo* te1 = equiposganadores3[l*2];
+        Equipo* te2 = equiposganadores3[(l*2)+ 1] ;
+
+        string arbitros4[3] ={"codArbitro1","codArbitro2","codArbitro3"};
+
+        Partido game4(te1, te2, "nombreSede", arbitros4, "00:00", "10/07/2026");
+
+        game4.jugar();
+
+        if(game4.getgoles1() > game4.getgoles2()){
+
+            equiposganadores4[l] = te1;
+        }
+
+        else if(game4.getgoles2() > game4.getgoles1()){
+
+            equiposganadores4[l] = te2;
+        }
+
+    }
+
+    Equipo* ganador;
+
+
+
+    Equipo* tea1 = equiposganadores4[0];
+    Equipo* tea2 = equiposganadores4[1] ;
+
+    string arbitros5[3] ={"codArbitro1","codArbitro2","codArbitro3"};
+
+    Partido game5(tea1, tea2, "nombreSede", arbitros5, "00:00", "10/07/2026");
+
+    game5.jugar();
+
+    if(game5.getgoles1() > game5.getgoles2()){
+
+        ganador = tea1;
+        }
+
+    else if(game5.getgoles2() > game5.getgoles1()){
+
+        ganador = tea2;
+     }
+
+
+
+}
+
+
+Torneo :: ~Torneo(){
+
+    for(unsigned int i = 0 ; i < 48; i++){
+
+        delete[] equipos[i];
+
+
+    }
+
+    delete[] equipos;
+
+
+    for(unsigned int j = 0 ; j < 4; j++){
+
+        delete[] bombos[j];
+    }
+
+    delete[] bombos;
+
+
+    for(unsigned int k = 0 ; k < 48; k++){
+
+        delete[] grupos[k];
+
+
+    }
+
+    delete[] grupos;
 
 }
 

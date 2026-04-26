@@ -34,6 +34,13 @@ public:
     Equipo* primero();
     Equipo* segundo();
 
+    //Getters
+
+    unsigned short getpuntos(unsigned short i)const;
+    short getdiffgoles(unsigned short j)const;
+
+    bool confederacion_valida(Equipo* equipo)const;
+
     Equipo* operator[](unsigned short)const;
 
     ~Grupo();

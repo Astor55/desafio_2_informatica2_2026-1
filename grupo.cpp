@@ -23,6 +23,8 @@ Grupo::Grupo(const Grupo& otro)
     letra = otro.letra;
     cantidad_equipos = otro.cantidad_equipos;
 
+    equipos = new Equipo*[4];
+
     for(unsigned short i = 0; i < 4; i++)
     {
 
@@ -128,7 +130,7 @@ void Grupo::ordenar()
 
         bool cambio = false;
 
-        for (int j = 0; j < cantidad_equipos - 1 - i; j++)
+        for (unsigned short j = 0; j < cantidad_equipos - 1 - i; j++)
         {
 
             if(puntos[j + 1] > puntos[j] ||
@@ -169,7 +171,6 @@ void Grupo::ordenar()
 Equipo* Grupo::primero()
 {
 
-    ordenar();
     return equipos[0];
 
 }
@@ -178,11 +179,51 @@ Equipo* Grupo::primero()
 Equipo* Grupo::segundo()
 {
 
-    ordenar();
     return equipos[1];
 
 }
 
 
+bool Grupo :: confederacion_valida(Equipo * equipo) const{
+
+    if(equipo == nullptr) return false;
+
+    string conf = equipo->getConfederacion();
+    int contador = 0;
+
+    for(unsigned short i = 0; i < cantidad_equipos; i++)
+    {
+        if(equipos[i] != nullptr &&
+            equipos[i]->getConfederacion() == conf)
+        {
+            contador++;
+        }
+    }
+
+    if(conf == "UEFA" || conf == "uefa")
+    {
+        return contador < 2;
+    }
+
+    return contador == 0;
+
+}
+
+//Getters
+
+unsigned short Grupo :: getpuntos(unsigned short i)const{
+
+    return puntos[i];
+}
+
+short Grupo :: getdiffgoles(unsigned short j)const{
+
+    return dif_goles[j];
+}
+
+
 //destructor
-Grupo::~Grupo(){}
+Grupo::~Grupo(){
+
+    delete[] equipos;
+}

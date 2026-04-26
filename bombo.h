@@ -3,11 +3,10 @@
 
 #include "equipo.h"
 
-using namespace std;
-
 class Bombo
 {
     private: //Atributos
+
     Equipo** equipos;
     unsigned int cantidad; //Cantidad de equipos dentro de un bombo
     unsigned int posicion_equipo; //posicion (indice) de cada equipo dentro del bombo

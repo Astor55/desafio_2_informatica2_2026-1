@@ -275,6 +275,42 @@ unsigned int Equipo::getRankingFIFA()const
 
 
 
+string Equipo::getnombre() const
+{
+
+    return nombre;
+
+}
+
+
+
+unsigned short Equipo::getPartidosEmpatados() const
+{
+
+    return partidos_empatados;
+
+}
+
+
+
+unsigned short Equipo::getPartidosPerdidos() const
+{
+
+    return partidos_perdidos;
+
+}
+
+
+
+unsigned short Equipo::getPartidosGanados()const
+{
+
+    return partidos_ganados;
+
+}
+
+
+
 Jugador* Equipo :: getJugador_en_partido(unsigned short indice) const{
 
     return &jugadores_en_partido[indice];

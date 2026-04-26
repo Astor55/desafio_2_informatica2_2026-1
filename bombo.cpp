@@ -9,6 +9,13 @@ Bombo :: Bombo(){
     posicion_equipo = 0;
 
     equipos = new Equipo*[cantidad];
+
+    for (unsigned short i = 0; i < cantidad; ++i)
+    {
+
+        equipos[i] = nullptr;
+
+    }
 }
 
 
@@ -20,7 +27,7 @@ Bombo :: Bombo(const Bombo& otro){
 
     equipos = new Equipo*[cantidad];
 
-    for(int i = 0; i < posicion_equipo ; i++){
+    for(unsigned short i = 0; i < cantidad; i++){
 
         equipos[i] = otro.equipos[i];
     }
@@ -31,10 +38,13 @@ Bombo :: Bombo(const Bombo& otro){
 
 void Bombo :: Agregar_equipo(Equipo* nuevo_equipo){
 
-    if(posicion_equipo < cantidad){
+    if(nuevo_equipo == nullptr) return;
 
-        equipos[posicion_equipo] = nuevo_equipo;
-        posicion_equipo++;
+    if(posicion_equipo < cantidad)
+    {
+
+        equipos[posicion_equipo++] = nuevo_equipo;
+
     }
 }
 
@@ -42,7 +52,8 @@ void Bombo :: Agregar_equipo(Equipo* nuevo_equipo){
 Equipo* Bombo :: Sacar_aleatorio(){
 
 
-    if(posicion_equipo == 0){
+    if(posicion_equipo == 0)
+    {
 
         return nullptr;
     }
@@ -50,9 +61,9 @@ Equipo* Bombo :: Sacar_aleatorio(){
     static random_device rd;
     static mt19937 gen(rd());
 
-    uniform_int_distribution<> dist(0, posicion_equipo -1);
+    uniform_int_distribution<int> dist(0, posicion_equipo - 1);
 
-    indice = dist(gen);
+    unsigned short indice = dist(gen);
 
     Equipo* seleccionado = equipos[indice];
 
@@ -65,28 +76,30 @@ Equipo* Bombo :: Sacar_aleatorio(){
 
 
 
-Bombo& Bombo :: operator=(const Bombo& otro){
+Bombo& Bombo :: operator=(const Bombo& otro)
+{
 
-    if(this != &otro){
+    if(this == &otro) return *this;
 
-        delete[] equipos;
 
-        cantidad = otro.cantidad;
+    delete[] equipos;
 
-        posicion_equipo = otro.posicion_equipo;
+    cantidad = otro.cantidad;
 
-        equipos = new Equipo*[cantidad];
+    posicion_equipo = otro.posicion_equipo;
 
-        for(int i = 0; i < posicion_equipo; i++){
+    equipos = new Equipo*[cantidad];
 
-            equipos[i] = otro.equipos[i];
-        }
+    for(unsigned short i = 0; i < cantidad; i++){
 
-        return *this;
+        equipos[i] = otro.equipos[i];
     }
 
+    return *this;
 
 }
+
+
 
 bool Bombo :: operator==(const Bombo& otro) const{
 
@@ -115,7 +128,8 @@ bool Bombo :: operator==(const Bombo& otro) const{
 
 
 
-Bombo :: ~Bombo(){
+Bombo::~Bombo()
+{
 
     delete[] equipos;
 

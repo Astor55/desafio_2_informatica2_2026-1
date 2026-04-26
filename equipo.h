@@ -50,7 +50,11 @@ class Equipo
         unsigned int getGolesAFavor() const;
         unsigned int getGolesEnContra() const;
         unsigned int getPartidosJugados() const;
+        unsigned short getPartidosGanados() const;
+        unsigned short getPartidosPerdidos() const;
+        unsigned short getPartidosEmpatados() const;
         unsigned int getRankingFIFA() const;
+        string getnombre() const;
         Jugador* getJugador_en_partido(unsigned short indice) const;
 
         ~Equipo(); //Destructor de la clase

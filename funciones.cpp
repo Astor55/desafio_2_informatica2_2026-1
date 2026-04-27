@@ -69,6 +69,7 @@ Equipo** leerCSV(const string& NombreArchivo)
                 stoi(ranking), stoi(partidos_ganados),
                 stoi(partidos_empatados), stoi(partidos_perdidos)
             );
+
             memoria_usada += sizeof(Equipo);
 
             i++;
@@ -92,11 +93,11 @@ long long cont_trabajo = 0;
 
 long long memoria_usada = 0;
 
-Torneo* inicializacion_torno(Equipo** equipos)
+Torneo* inicializacion_torneo(Equipo** equipos)
 {
 
     cont_trabajo++;
-    Torneo* torneo = new Torneo(equipos[0]);
+    Torneo* torneo = new Torneo(equipos);
     memoria_usada += sizeof(Torneo);
 
     return torneo;
@@ -109,12 +110,15 @@ void ejecutar_torneo(Torneo* torneo)
 {
 
     torneo->crear_bombos();
-
     torneo->generar_grupos();
-
     torneo->simular_fase_de_grupos();
 
-    torneo->clasificar_equipos();
+    Equipo* clasificados[32];
+
+    torneo->clasificar_equipos(clasificados);
+    torneo->simular_eliminatorias(clasificados);
+
+    torneo->generar_estadisticas();
 
 }
 

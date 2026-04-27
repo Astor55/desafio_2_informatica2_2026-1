@@ -23,6 +23,7 @@ add_executable(desafio_2_2026_1
     funciones.h
     funciones.cpp
     torneo.h torneo.cpp
+    Jugador.cpp
 
 )
 

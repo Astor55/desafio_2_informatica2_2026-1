@@ -9,7 +9,7 @@ Bombo :: Bombo(){
     posicion_equipo = 0;
 
     equipos = new Equipo*[cantidad];
-    memoria_usada += sizeof(Equipo*);
+    memoria_usada += sizeof(Equipo*) * cantidad;
 
     for (unsigned short i = 0; i < cantidad; ++i)
     {
@@ -38,45 +38,56 @@ Bombo :: Bombo(const Bombo& otro){
 }
 
 
-void Bombo :: Agregar_equipo(Equipo* nuevo_equipo){
+void Bombo::Agregar_equipo(Equipo* equipo_nuevo)
+{
+    if(equipo_nuevo == nullptr) return;
 
-    if(nuevo_equipo == nullptr) return;
-
-    if(posicion_equipo < cantidad)
+    for(unsigned short i = 0; i < cantidad; i++)
     {
+        if(equipos[i] == equipo_nuevo)
+        {
+            return;
+        }
+    }
 
-        equipos[posicion_equipo++] = nuevo_equipo;
-        cont_trabajo++;
-
+    if(cantidad < 12)
+    {
+        equipos[cantidad++] = equipo_nuevo;
     }
 }
 
 
-Equipo* Bombo :: Sacar_aleatorio(){
-
-
-    if(posicion_equipo == 0)
+Equipo* Bombo::Sacar_aleatorio()
+{
+    if(cantidad == 0)
     {
-
         return nullptr;
     }
 
     static random_device rd;
     static mt19937 gen(rd());
 
-    uniform_int_distribution<int> dist(0, posicion_equipo - 1);
+    uniform_int_distribution<int> dist(0, cantidad - 1);
 
     unsigned short indice = dist(gen);
 
     Equipo* seleccionado = equipos[indice];
 
-    equipos[indice] = equipos[posicion_equipo - 1];
+    equipos[indice] = equipos[cantidad - 1];
 
-    posicion_equipo--;
+    cantidad--;
 
     return seleccionado;
 }
 
+void Bombo :: vaciar(){
+
+    for(unsigned short i = 0; i < cantidad; i++)
+    {
+        equipos[i] = nullptr;
+    }
+    cantidad = 0;
+}
 
 
 Bombo& Bombo :: operator=(const Bombo& otro)

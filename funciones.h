@@ -8,7 +8,7 @@
 Equipo** leerCSV(const string& NombreArchivo);
 
 //torneo
-Torneo* inicializacion_torno(Equipo** equipos);
+Torneo* inicializacion_torneo(Equipo** equipos);
 void ejecutar_torneo(Torneo* torneo);
 
 //liberacion de memoria

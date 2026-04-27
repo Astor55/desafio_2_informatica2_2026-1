@@ -17,6 +17,8 @@ class Equipo
     Jugador* jugadores;
     Jugador* jugadores_en_partido;
 
+    unsigned short Bombo;
+
     unsigned short cantidad_jugadores;
     unsigned short cantidad_jugadores_jugando;
     unsigned int goles_a_favor;
@@ -53,10 +55,17 @@ class Equipo
         unsigned short getPartidosGanados() const;
         unsigned short getPartidosPerdidos() const;
         unsigned short getPartidosEmpatados() const;
+        unsigned short getcantidadJugadores() const;
         unsigned int getRankingFIFA() const;
+        unsigned short getBombo() const;
+
+        void setBombo(unsigned short b);
+
         string getconfederacion() const;
         string getnombre() const;
+
         Jugador* getJugador_en_partido(unsigned short indice) const;
+        Jugador* getJugadores() const;
 
         ~Equipo(); //Destructor de la clase
 

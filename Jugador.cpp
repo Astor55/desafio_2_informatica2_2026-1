@@ -4,20 +4,33 @@
 Jugador::Jugador()
 {
 
-    nombre = "";
-    apellido = "";
-    numero_camisa = 0;
-
-    goles = 0;
-    asistencias = 0;
-    amarillas = 0;
-    rojas = 0;
-    faltas = 0;
-
-    minutos = 0;
-    partidos = 0;
+    this->nombre = "";
+    this->apellido = "";
+    this->numero_camisa = 0;
+    this->goles = 0;
+    this->asistencias = 0;
+    this->amarillas = 0;
+    this->rojas = 0;
+    this->faltas = 0;
+    this->minutos = 0;
+    this->partidos = 0;
 
 }
+
+
+Jugador::Jugador(string nombre, string apellido, unsigned short numero_camisa)
+    : nombre(nombre),
+    apellido(apellido),
+    numero_camisa(numero_camisa),
+    goles(0),
+    asistencias(0),
+    amarillas(0),
+    rojas(0),
+    faltas(0),
+    minutos(0),
+    partidos(0)
+{}
+
 
 //constructor de copia
 Jugador::Jugador(const Jugador& otro)
@@ -66,7 +79,7 @@ void Jugador::Sumar_amarilla()
 
 }
 
-void Jugador::Sumar_minutos(unsigned short minutos)
+void Jugador::Sumar_minutos(unsigned int minutos)
 {
 
     this->minutos += minutos;
@@ -115,6 +128,24 @@ unsigned short Jugador::getFaltas()const
     return faltas;
 
 }
+
+
+string Jugador::getNombre() const
+{
+
+    return nombre;
+
+}
+
+
+
+string Jugador::getApellido() const
+{
+
+    return apellido;
+
+}
+
 
 
 //Destructor

@@ -12,8 +12,8 @@ private:
     //atributos
     string nombre;
     string apellido;
-    unsigned short numero_camisa;
 
+    unsigned short numero_camisa;
     unsigned short goles;
     unsigned short asistencias;
     unsigned short amarillas;
@@ -39,7 +39,7 @@ public:
     void Anotar_gol();
     void Sumar_roja();
     void Sumar_amarilla();
-    void Sumar_minutos(unsigned short minutos);
+    void Sumar_minutos(unsigned int minutos);
     void Sumar_asistencias();
     void Sumar_partidos_jugados();
     void Sumar_faltas();
@@ -49,6 +49,8 @@ public:
     unsigned short getGoles() const;
     unsigned short getFaltas() const;
 
+    string getNombre() const;
+    string getApellido() const;
 
     //Destructor
     ~Jugador();

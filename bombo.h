@@ -18,6 +18,7 @@ class Bombo
         Bombo(const Bombo& otro);
 
         void Agregar_equipo(Equipo*);
+        void vaciar();
         Equipo* Sacar_aleatorio();
 
         Bombo& operator=(const Bombo& otro);

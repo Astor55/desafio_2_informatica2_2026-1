@@ -7,19 +7,14 @@ Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_fa
     : puntos(0) , cantidad_jugadores(26), cantidad_jugadores_jugando(11) {
 
     nombre =_nombre;
-
     confederacion = _confederacion;
 
     goles_a_favor = _goles_a_favor;
-
     goles_en_contra = _goles_en_contra;
-
     ranking_fifa = _ranking_fifa;
 
     partidos_ganados = _partidos_ganados;
-
     partidos_empatados = _partidos_empatados;
-
     partidos_perdidos = _partidos_perdidos;
 
     jugadores = new Jugador[cantidad_jugadores];
@@ -27,6 +22,32 @@ Equipo :: Equipo(string _nombre, string _confederacion, unsigned int _goles_a_fa
 
     jugadores_en_partido = new Jugador[cantidad_jugadores_jugando];
     memoria_usada += sizeof(Jugador) * cantidad_jugadores_jugando;
+
+    for(unsigned int i = 0; i < cantidad_jugadores; i++)
+    {
+
+        string nombre_P = "nombre" + to_string(i + 1);
+        string apellido_P = "apellido" + to_string(i + 1);
+
+        jugadores[i] = Jugador(nombre_P, apellido_P, i + 1);
+
+    }
+}
+
+
+unsigned short Equipo::getBombo() const
+{
+
+    return Bombo;
+
+}
+
+
+void Equipo::setBombo(unsigned short b)
+{
+
+    Bombo = b;
+
 }
 
 
@@ -175,6 +196,8 @@ Equipo& Equipo :: operator=(const Equipo& otra){
         cantidad_jugadores = otra.cantidad_jugadores;
 
         delete[] jugadores;
+
+        cantidad_jugadores_jugando = otra.cantidad_jugadores_jugando;
 
         jugadores = new Jugador[cantidad_jugadores];
         memoria_usada += sizeof(Jugador) * cantidad_jugadores;
@@ -341,6 +364,24 @@ Jugador* Equipo :: getJugador_en_partido(unsigned short indice) const{
     return &jugadores_en_partido[indice];
 
 }
+
+
+unsigned short Equipo::getcantidadJugadores() const
+{
+
+    return cantidad_jugadores;
+
+}
+
+
+
+Jugador* Equipo::getJugadores() const
+{
+
+    return jugadores;
+
+}
+
 
 
 //destructor

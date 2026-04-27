@@ -190,6 +190,13 @@ Equipo* Grupo::segundo()
 
 }
 
+void Grupo::vaciar()
+{
+
+    cantidad_equipos = 0;
+
+}
+
 
 bool Grupo :: confederacion_valida(Equipo * equipo) const{
 
@@ -226,6 +233,13 @@ unsigned short Grupo :: getpuntos(unsigned short i)const{
     return puntos[i];
 }
 
+unsigned short Grupo::getCantidadEquipos() const
+{
+
+    return cantidad_equipos;
+
+}
+
 short Grupo :: getdiffgoles(unsigned short j)const{
 
     return dif_goles[j];
@@ -233,7 +247,8 @@ short Grupo :: getdiffgoles(unsigned short j)const{
 
 
 //destructor
-Grupo::~Grupo(){
+Grupo::~Grupo()
+{
 
     delete[] equipos;
 }

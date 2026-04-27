@@ -1,35 +1,55 @@
 #include <iostream>
 #include "funciones.h"
+
 using namespace std;
 
 int main()
 {
+    cout << "===== UdeA World Cup Simulator =====" << endl;
 
-    Equipo** equipos = leerCSV("C:\\Users\\ASUS\\OneDrive\\Desktop\\c++\\desafio_2\\desafio_2_2026_1\\desafio_2_informatica2_2026-1\\selecciones_clasificadas_mundial.csv");
+    string archivo = "C:\\Users\\ASUS\\OneDrive\\Desktop\\c++\\desafio_2\\desafio_2_2026_1\\desafio_2_informatica2_2026-1\\selecciones_clasificadas_mundial.csv";
+
+
+    Equipo** equipos = leerCSV(archivo);
 
     if(equipos == nullptr)
     {
-
-        cout << "No se cargaron equipos\n";
+        cout << "Error: no se pudieron cargar los equipos." << endl;
         return 1;
-
     }
 
-    for (int j = 0; j < 48; j++)
+    cout << "Equipos cargados correctamente." << endl;
+
+
+    Torneo* torneo = inicializacion_torneo(equipos);
+
+    if(torneo == nullptr)
     {
-
-        cout << "Equipo: " << equipos[j]->getnombre() << endl;
-        cout << "ranking: " << equipos[j]->getRankingFIFA() << endl;
-        cout << "Goles a favor: " << equipos[j]->getGolesAFavor() << endl;
-        cout << "Goles en contra: " << equipos[j]->getGolesEnContra() << endl;
-        cout << "Partidos ganados: " << equipos[j]->getPartidosGanados() << endl;
-        cout << "Partidos empatados: " << equipos[j]->getPartidosEmpatados() << endl;
-        cout << "Partidos perdidos: " << equipos[j]->getPartidosPerdidos() << endl;
-        cout << "----------------------" << endl;
-
+        cout << "Error al inicializar el torneo." << endl;
+        liberar_memoria(equipos, 48);
+        return 1;
     }
 
+    cout << "Torneo inicializado." << endl;
+
+
+    cout << "\n=== Iniciando simulacion ===\n" << endl;
+
+    ejecutar_torneo(torneo);
+
+    cout << "\n=== Simulacion finalizada ===\n" << endl;
+
+
+    cout << "\n--- METRICAS ---" << endl;
+    cout << "Trabajo total: " << cont_trabajo << endl;
+    cout << "Memoria usada: " << memoria_usada << " bytes" << endl;
+
+
+    liberar_torneo(torneo);
     liberar_memoria(equipos, 48);
+
+    cout << "\nMemoria liberada correctamente." << endl;
 
     return 0;
 }
+

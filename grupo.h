@@ -30,6 +30,7 @@ public:
                           unsigned short goles_i, unsigned short goles_j);
 
     void ordenar();
+    void vaciar();
 
     Equipo* primero();
     Equipo* segundo();
@@ -38,7 +39,7 @@ public:
 
     unsigned short getpuntos(unsigned short i)const;
     short getdiffgoles(unsigned short j)const;
-
+    unsigned short getCantidadEquipos() const;
     bool confederacion_valida(Equipo* equipo)const;
 
     Equipo* operator[](unsigned short)const;

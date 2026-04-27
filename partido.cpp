@@ -47,39 +47,42 @@ Partido :: Partido(const Partido& otro){
 
 void Partido::jugar()
 {
-
     if(equipo_1 == nullptr || equipo_2 == nullptr) return;
 
-    //resultados de los equipos(goles)
     resultados();
 
-    //eventos durante el partido(faltas, tarjetas)
-    eventos();
+    equipo_1->sumar_goles_a_favor(goles_equipo1);
+    equipo_2->sumar_goles_a_favor(goles_equipo2);
 
-    //posesion del balon durante el partido
+    for(int i = 0; i < goles_equipo1; i++)
+    {
+        int j = rand() % equipo_1->getcantidadJugadores();
+        equipo_1->getJugadores()[j].Anotar_gol();
+    }
+
+    for(int i = 0; i < goles_equipo2; i++)
+    {
+        int j = rand() % equipo_2->getcantidadJugadores();
+        equipo_2->getJugadores()[j].Anotar_gol();
+    }
+
+    eventos();
     calcular_posesion();
 
     sumar_partidos();
 
-    //es empate?
     if(es_empate())
     {
-
         desempatar();
         duracion = 120;
         asignar_min(120);
-
     }
-
     else
     {
-
         asignar_min(90);
-
     }
 
     actualizar_estado();
-
 }
 
 
